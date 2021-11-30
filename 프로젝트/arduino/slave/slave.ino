@@ -26,8 +26,10 @@ unsigned long RTCpreMillis = 0;
 //모터
 const int moterIn1 = 4;
 const int moterIn2 = 5;
+bool ismoterOn = false;
 //LED
 const int led = 10;
+bool isledOn = false;
 
 unsigned long sensorPreMillis = 0;
 
@@ -102,31 +104,43 @@ void loop(){
 
     //LED 동작
     if(btRead == "ledOn"){
-      LCDclear();
-      digitalWrite(led, HIGH);
-      lcd.print("LED ON");
-      delay(3000);
+      if (!isledOn){  //꺼져있으면 동작
+        LCDclear();
+        digitalWrite(led, HIGH);
+        lcd.print("LED ON");
+        delay(3000);
+        isledOn = true;
+      }
     }
     if(btRead == "ledOff"){
-      LCDclear();        
-      digitalWrite(led, LOW);
-      lcd.print("LED OFF");
-      delay(3000);
+      if(isledOn){   //켜져있으면 동작
+        LCDclear();        
+        digitalWrite(led, LOW);
+        lcd.print("LED OFF");
+        delay(3000);
+        isledOn = false;
+      }
     }
     //팬 동작
     if(btRead == "moterOn"){
-      LCDclear();
-      digitalWrite(moterIn1, HIGH);
-      digitalWrite(moterIn2, LOW);     
-      lcd.print("FAN ON");
-      delay(3000);
+      if(!ismoterOn){  //꺼져있으면 동작
+        LCDclear();
+        digitalWrite(moterIn1, HIGH);
+        digitalWrite(moterIn2, LOW);     
+        lcd.print("FAN ON");
+        delay(3000);
+        ismoterOn = true;
+      }
     }
     if(btRead == "moterOff"){
-      LCDclear();
-      digitalWrite(moterIn1, LOW);
-      digitalWrite(moterIn2, LOW);
-      lcd.print("FAN OFF");
-      delay(3000);
+      if(ismoterOn){  //켜져있으면 동작
+        LCDclear();
+        digitalWrite(moterIn1, LOW);
+        digitalWrite(moterIn2, LOW);
+        lcd.print("FAN OFF");
+        delay(3000);
+        ismoterOn = false;
+      }
     }
   }
 }
