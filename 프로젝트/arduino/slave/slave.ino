@@ -76,7 +76,7 @@ void loop(){
   hum = int(DHT.humidity);
   temp = int(DHT.temperature);
   
-  //3초마다 센서값 전송
+  //5초마다 센서값 전송
   if(currentMillis-sensorPreMillis > 5000){
     sensorPreMillis = currentMillis;
     //조도센서 동작
